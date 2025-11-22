@@ -68,7 +68,7 @@
             justify-items: center;
         }
         .photo-cell {
-            width: 10.5cm;
+            width: 21cm;
             height: 5.94cm;
             border: 2px dashed #ccc;
             overflow: hidden;
@@ -206,7 +206,7 @@
             align-items: center;
         }
         .layout-cell {
-            width: 150px;
+            width: 200px;
             height: 20px;
             background: #e0e0e0;
             border: 1px solid #ccc;
@@ -238,17 +238,17 @@
             
             <div class="layout-preview">
                 <div class="layout-diagram">
-                    <div class="layout-cell">Photo 1</div>
-                    <div class="layout-cell">Photo 2</div>
-                    <div class="layout-cell">Photo 3</div>
-                    <div class="layout-cell">Photo 4</div>
-                    <div class="layout-cell">Photo 5</div>
-                    <div class="layout-label">1 column × 5 rows layout</div>
+                    <div class="layout-cell">Photo 1 (210mm × 59.4mm)</div>
+                    <div class="layout-cell">Photo 2 (210mm × 59.4mm)</div>
+                    <div class="layout-cell">Photo 3 (210mm × 59.4mm)</div>
+                    <div class="layout-cell">Photo 4 (210mm × 59.4mm)</div>
+                    <div class="layout-cell">Photo 5 (210mm × 59.4mm)</div>
+                    <div class="layout-label">1 column × 5 rows layout (Full A4 width)</div>
                 </div>
             </div>
             
             <div class="size-info">
-                Each photo: 105mm × 59.4mm (perfect 1×5 grid on A4 paper)
+                Each photo: 210mm × 59.4mm (perfect 1×5 grid on A4 paper)
             </div>
             <div class="cutting-guide">
                 Cut along the grid lines to get 5 photos
@@ -473,14 +473,9 @@
             const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
             const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
             
-            // Calculate exact dimensions for perfect 1x5 grid
-            // 1 column: 105mm width
-            // 5 rows: 297mm / 5 = 59.4mm each
-            const photoWidth = 105; // 105mm
-            const photoHeight = pdfHeight / 5; // 59.4mm
-
-            // Calculate starting position to center the photos horizontally
-            const startX = (pdfWidth - photoWidth) / 2;
+            // Set exact dimensions for 1x5 grid
+            const photoWidth = 210; // 210mm (full width)
+            const photoHeight = 59.4; // 59.4mm
 
             // Track loaded images
             let imagesLoaded = 0;
@@ -498,7 +493,7 @@
                         pdf.addImage(
                             cellImageData[row], 
                             'JPEG', 
-                            startX, 
+                            0, // Start at left edge (0mm)
                             yPos, 
                             photoWidth, 
                             photoHeight
@@ -507,7 +502,7 @@
                 }
                 
                 // Save the PDF
-                pdf.save('photos-5-custom.pdf');
+                pdf.save('photos-5-full-width.pdf');
                 status.textContent = 'PDF generated successfully! Check your downloads folder.';
             }
 
